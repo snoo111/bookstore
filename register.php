@@ -1,4 +1,3 @@
-
 <?php
 
 include 'config.php';
@@ -7,27 +6,54 @@ if(isset($_POST['submit'])){
 
    $name = mysqli_real_escape_string($conn, $_POST['name']);
    $email = mysqli_real_escape_string($conn, $_POST['email']);
-   $pass = mysqli_real_escape_string($conn, md5($_POST['password']));
-   $cpass = mysqli_real_escape_string($conn, md5($_POST['cpassword']));
+   $pass = $_POST['password'];
+   $cpass = $_POST['cpassword'];
    $user_type = $_POST['user_type'];
 
-   $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email' AND password = '$pass'") or die('query failed');
+   // Server-side validation
+   $errors = [];
 
-   if(mysqli_num_rows($select_users) > 0){
-      $message[] = 'user already exist!';
-   }else{
-      if($pass != $cpass){
-         $message[] = 'confirm password not matched!';
-      }else{
-         mysqli_query($conn, "INSERT INTO `users`(name, email, password, user_type) VALUES('$name', '$email', '$cpass', '$user_type')") or die('query failed');
-         $message[] = 'registered successfully!';
-         header('location:login.php');
-      }
+   // Validate name
+   if (!preg_match("/^[a-zA-Z ]*$/", $name)) {
+      $errors[] = 'Name must contain letters only!';
    }
 
+   // Validate email
+   if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+      $errors[] = 'Invalid email format!';
+   }
+
+   // Validate password
+   if (!preg_match("/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/", $pass)) {
+      $errors[] = 'Password must be at least 8 characters and include at least one number, one uppercase letter, one lowercase letter, and one special character!';
+   }
+
+   // Confirm password match
+   if ($pass !== $cpass) {
+      $errors[] = 'Confirm password does not match!';
+   }
+
+   if (empty($errors)) {
+      $pass = mysqli_real_escape_string($conn, md5($pass));
+      $cpass = mysqli_real_escape_string($conn, md5($cpass));
+      $select_users = mysqli_query($conn, "SELECT * FROM `users` WHERE email = '$email'") or die('query failed');
+
+      if(mysqli_num_rows($select_users) > 0){
+         $message[] = 'User already exists!';
+      }else{
+         mysqli_query($conn, "INSERT INTO `users`(name, email, password, user_type) VALUES('$name', '$email', '$cpass', '$user_type')") or die('query failed');
+         $message[] = 'Registered successfully!';
+         header('location:login.php');
+      }
+   } else {
+      foreach ($errors as $error) {
+         $message[] = $error;
+      }
+   }
 }
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -44,6 +70,7 @@ if(isset($_POST['submit'])){
    <link rel="stylesheet" href="css/style.css">
 
 </head>
+
 <body>
 
 
@@ -61,6 +88,7 @@ if(isset($message)){
 }
 ?>
    
+  
 <div class="form-container">
 
    <form action="" method="post">

@@ -21,9 +21,9 @@
       <div class="box">
          <h3>contact info</h3>
          <p> <i class="fas fa-phone"></i> 9808556300</p>
-         <p> <i class="fas fa-phone"></i> +111-222-3333 </p>
-         <p> <i class="fas fa-envelope"></i> snehabookstore@gmail.com </p>
-         <p> <i class="fas fa-map-marker-alt"></i> Kathmandu, Nepal- 400104 </p>
+         <p> <i class="fas fa-phone"></i> 01456</p>
+         <p> <i class="fas fa-envelope"></i> bookparadise@gmail.com</p>
+         <p> <i class="fas fa-map-marker-alt"></i>Boudha, Kathmandu, Nepal- 400104 </p>
       </div>
 
       <div class="box">

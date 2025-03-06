@@ -4,11 +4,7 @@ include 'config.php';
 
 session_start();
 
-$user_id = $_SESSION['user_id'];
-
-if(!isset($user_id)){
-   header('location:login.php');
-}
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 
 ?>
 
@@ -190,7 +186,7 @@ if(!isset($user_id)){
       <div class="box">
          <img src="images/Chetan Bhagat.jpg" alt="">
          <div class="share">
-         <a href= "https://www.facebook.com/"class="fab fa-facebook-f"></a>
+         <a href= "https://www.facebook.com/chetanbhagat.fanpage/"class="fab fa-facebook-f"></a>
             <a href="https://x.com/?lang-en=" class="fab fa-twitter"></a>
             <a href="https://www.instagram.com/"  class="fab fa-instagram"></a>
             <a href="https://www.linkedin.com/feed/" class="fab fa-linkedin"></a>
@@ -217,7 +213,35 @@ if(!isset($user_id)){
             <a href="https://www.instagram.com/"  class="fab fa-instagram"></a>
             <a href="https://www.linkedin.com/feed/" class="fab fa-linkedin"></a>
          </div>
-         <h3>Rabindranath Tagore</h3>
+         <h3>Rabindra Mishra</h3>
+      </div>
+
+   </div>
+
+</section>
+
+<section class="faq">
+
+   <h1 class="title">frequently asked questions</h1>
+
+   <div class="box-container">
+
+            </div>
+
+      <div class="box">
+         <h3>How long does shipping take?</h3>
+         <p>Shipping times vary depending on your location and the shipping method chosen.
+            On average, standard shipping takes 5-7 business days, while expedited shipping takes 2-3 business days.
+         </p>
+      </div>
+
+      
+
+      <div class="box">
+         <h3>How do I contact customer support?</h3>
+         <p>For customer support inquiries, you can reach out to us via email at [email protected]
+            or use the contact form available on our 'Contact Us' page. We're here to help!
+         </p>
       </div>
 
    </div>
@@ -230,9 +254,13 @@ if(!isset($user_id)){
 
 
 
+
+
+
+
+
 <?php include 'footer.php'; ?>
 
-<!-- custom js file link  -->
 <script src="js/script.js"></script>
 
 </body>
